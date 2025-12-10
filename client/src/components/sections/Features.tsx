@@ -6,7 +6,7 @@ import {
   Layers, 
   ShieldCheck, 
   Zap,
-  ArrowDown
+  Clock
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import {
@@ -28,66 +28,42 @@ export function Features() {
       title: t.features.items.integration.title,
       description: t.features.items.integration.desc,
       detail: t.features.items.integration.detail,
-      steps: [
-        { title: "Connect", desc: "Secure API handshake" },
-        { title: "Normalize", desc: "Standardize data formats" },
-        { title: "Sync", desc: "Continuous data flow" }
-      ]
+      steps: t.features.items.integration.steps
     },
     {
       icon: Presentation,
       title: t.features.items.storytelling.title,
       description: t.features.items.storytelling.desc,
       detail: t.features.items.storytelling.detail,
-      steps: [
-        { title: "Analyze", desc: "Identify key metrics" },
-        { title: "Design", desc: "UX/UI Prototyping" },
-        { title: "Deploy", desc: "Interactive Dashboard" }
-      ]
+      steps: t.features.items.storytelling.steps
     },
     {
       icon: BrainCircuit,
       title: t.features.items.predictive.title,
       description: t.features.items.predictive.desc,
       detail: t.features.items.predictive.detail,
-      steps: [
-        { title: "Train", desc: "Historical data model" },
-        { title: "Test", desc: "Validate accuracy" },
-        { title: "Forecast", desc: "Future trend prediction" }
-      ]
+      steps: t.features.items.predictive.steps
     },
     {
       icon: Layers,
       title: t.features.items.pipelines.title,
       description: t.features.items.pipelines.desc,
       detail: t.features.items.pipelines.detail,
-      steps: [
-        { title: "Extract", desc: "Raw data collection" },
-        { title: "Transform", desc: "Business logic processing" },
-        { title: "Load", desc: "Warehouse storage" }
-      ]
+      steps: t.features.items.pipelines.steps
     },
     {
       icon: ShieldCheck,
       title: t.features.items.governance.title,
       description: t.features.items.governance.desc,
       detail: t.features.items.governance.detail,
-      steps: [
-        { title: "Audit", desc: "Access review" },
-        { title: "Policy", desc: "Rule implementation" },
-        { title: "Monitor", desc: "Compliance tracking" }
-      ]
+      steps: t.features.items.governance.steps
     },
     {
       icon: Zap,
       title: t.features.items.realtime.title,
       description: t.features.items.realtime.desc,
       detail: t.features.items.realtime.detail,
-      steps: [
-        { title: "Stream", desc: "Event capture" },
-        { title: "Process", desc: "In-memory computation" },
-        { title: "Push", desc: "Live client update" }
-      ]
+      steps: t.features.items.realtime.steps
     }
   ];
 
@@ -157,9 +133,15 @@ export function Features() {
                                             <div className="w-0.5 h-full bg-border my-1 min-h-[20px]" />
                                         )}
                                     </div>
-                                    <div className="pb-4">
-                                        <h5 className="font-bold text-foreground">{step.title}</h5>
-                                        <p className="text-sm text-muted-foreground">{step.desc}</p>
+                                    <div className="pb-4 w-full">
+                                        <div className="flex justify-between items-start">
+                                            <h5 className="font-bold text-foreground">{step.title}</h5>
+                                            <div className="flex items-center gap-1 text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                                                <Clock className="h-3 w-3" />
+                                                {step.duration}
+                                            </div>
+                                        </div>
+                                        <p className="text-sm text-muted-foreground mt-1">{step.desc}</p>
                                     </div>
                                 </div>
                             ))}
