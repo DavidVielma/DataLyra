@@ -29,9 +29,10 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: t.nav.services, href: "/#services" }, // Anchor on home
-    { name: t.nav.process, href: "/process" },    // New page
-    { name: t.nav.about, href: "/about" },        // New page
+    { name: t.nav.services, href: "/#services" },
+    { name: t.nav.process, href: "/process" },
+    { name: t.nav.successStories, href: "/success-stories" }, // New link
+    { name: t.nav.about, href: "/about" },
   ];
 
   return (

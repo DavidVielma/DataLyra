@@ -6,6 +6,7 @@ type Translations = {
   nav: {
     services: string;
     process: string;
+    successStories: string;
     about: string;
     getStarted: string;
   };
@@ -41,6 +42,15 @@ type Translations = {
       step1: { title: string; desc: string };
       step2: { title: string; desc: string };
       step3: { title: string; desc: string };
+    };
+  };
+  successStories: {
+    title: string;
+    subtitle: string;
+    cases: {
+      retail: { title: string; client: string; desc: string; result: string };
+      fintech: { title: string; client: string; desc: string; result: string };
+      health: { title: string; client: string; desc: string; result: string };
     };
   };
   about: {
@@ -102,6 +112,7 @@ const translations: Record<Language, Translations> = {
     nav: {
       services: "Services",
       process: "Process",
+      successStories: "Success Stories",
       about: "About",
       getStarted: "Get Started",
     },
@@ -193,6 +204,15 @@ const translations: Record<Language, Translations> = {
         step3: { title: "We adapt technology and solve", desc: "Custom implementation of data solutions that drive results." },
       }
     },
+    successStories: {
+      title: "Success Stories",
+      subtitle: "See how we've helped companies across industries transform their data into competitive advantages.",
+      cases: {
+        retail: { title: "Retail Inventory Optimization", client: "FashionForward Inc.", desc: "Real-time inventory tracking and heatmap visualization.", result: "Reduced stockouts by 40%" },
+        fintech: { title: "Financial Portfolio Tracker", client: "WealthWise Group", desc: "Consolidated portfolio management view for advisors.", result: "Increased advisor efficiency by 25%" },
+        health: { title: "Hospital Resource Management", client: "City General Hospital", desc: "Predictive bed availability and patient flow dashboard.", result: "Improved patient throughput by 15%" },
+      }
+    },
     about: {
       title: "About DataLyra",
       subtitle: "We are a team of data engineers, designers, and strategists passionate about making data accessible.",
@@ -250,6 +270,7 @@ const translations: Record<Language, Translations> = {
     nav: {
       services: "Servicios",
       process: "Proceso",
+      successStories: "Casos de Éxito",
       about: "Nosotros",
       getStarted: "Comenzar",
     },
@@ -339,6 +360,15 @@ const translations: Record<Language, Translations> = {
         step1: { title: "Nos integramos a tus sistemas", desc: "Conexión fluida a tu infraestructura existente sin interrupciones." },
         step2: { title: "Entendemos tus desafíos", desc: "Profundizamos en tu lógica de negocio e indicadores clave de rendimiento." },
         step3: { title: "Adaptamos tecnología y solucionamos", desc: "Implementación personalizada de soluciones de datos que impulsan resultados." },
+      }
+    },
+    successStories: {
+      title: "Casos de Éxito",
+      subtitle: "Descubre cómo hemos ayudado a empresas de diversas industrias a transformar sus datos en ventajas competitivas.",
+      cases: {
+        retail: { title: "Optimización de Inventario Retail", client: "ModaAvanzada S.A.", desc: "Seguimiento de inventario en tiempo real y visualización de mapas de calor.", result: "Reducción de roturas de stock en un 40%" },
+        fintech: { title: "Tracker de Portafolio Financiero", client: "Grupo WealthWise", desc: "Vista consolidada de gestión de cartera para asesores.", result: "Aumento de eficiencia de asesores en un 25%" },
+        health: { title: "Gestión de Recursos Hospitalarios", client: "Hospital General Ciudad", desc: "Dashboard predictivo de disponibilidad de camas y flujo de pacientes.", result: "Mejora del flujo de pacientes en un 15%" },
       }
     },
     about: {

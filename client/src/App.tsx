@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/lib/i18n";
 import Home from "@/pages/Home";
 import Process from "@/pages/Process";
 import About from "@/pages/About";
+import SuccessStories from "@/pages/SuccessStories";
 import NotFound from "@/pages/not-found";
 import { Navbar } from "@/components/layout/Navbar";
 
@@ -20,6 +21,7 @@ function Router() {
         <Process />
       </Route>
       <Route path="/about" component={About} />
+      <Route path="/success-stories" component={SuccessStories} />
       <Route component={NotFound} />
     </Switch>
   );
