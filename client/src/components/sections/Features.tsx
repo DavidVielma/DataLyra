@@ -5,7 +5,8 @@ import {
   BrainCircuit, 
   Layers, 
   ShieldCheck, 
-  Zap 
+  Zap,
+  ArrowDown
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import {
@@ -26,37 +27,67 @@ export function Features() {
       icon: Workflow,
       title: t.features.items.integration.title,
       description: t.features.items.integration.desc,
-      detail: t.features.items.integration.detail
+      detail: t.features.items.integration.detail,
+      steps: [
+        { title: "Connect", desc: "Secure API handshake" },
+        { title: "Normalize", desc: "Standardize data formats" },
+        { title: "Sync", desc: "Continuous data flow" }
+      ]
     },
     {
       icon: Presentation,
       title: t.features.items.storytelling.title,
       description: t.features.items.storytelling.desc,
-      detail: t.features.items.storytelling.detail
+      detail: t.features.items.storytelling.detail,
+      steps: [
+        { title: "Analyze", desc: "Identify key metrics" },
+        { title: "Design", desc: "UX/UI Prototyping" },
+        { title: "Deploy", desc: "Interactive Dashboard" }
+      ]
     },
     {
       icon: BrainCircuit,
       title: t.features.items.predictive.title,
       description: t.features.items.predictive.desc,
-      detail: t.features.items.predictive.detail
+      detail: t.features.items.predictive.detail,
+      steps: [
+        { title: "Train", desc: "Historical data model" },
+        { title: "Test", desc: "Validate accuracy" },
+        { title: "Forecast", desc: "Future trend prediction" }
+      ]
     },
     {
       icon: Layers,
       title: t.features.items.pipelines.title,
       description: t.features.items.pipelines.desc,
-      detail: t.features.items.pipelines.detail
+      detail: t.features.items.pipelines.detail,
+      steps: [
+        { title: "Extract", desc: "Raw data collection" },
+        { title: "Transform", desc: "Business logic processing" },
+        { title: "Load", desc: "Warehouse storage" }
+      ]
     },
     {
       icon: ShieldCheck,
       title: t.features.items.governance.title,
       description: t.features.items.governance.desc,
-      detail: t.features.items.governance.detail
+      detail: t.features.items.governance.detail,
+      steps: [
+        { title: "Audit", desc: "Access review" },
+        { title: "Policy", desc: "Rule implementation" },
+        { title: "Monitor", desc: "Compliance tracking" }
+      ]
     },
     {
       icon: Zap,
       title: t.features.items.realtime.title,
       description: t.features.items.realtime.desc,
-      detail: t.features.items.realtime.detail
+      detail: t.features.items.realtime.detail,
+      steps: [
+        { title: "Stream", desc: "Event capture" },
+        { title: "Process", desc: "In-memory computation" },
+        { title: "Push", desc: "Live client update" }
+      ]
     }
   ];
 
@@ -97,19 +128,48 @@ export function Features() {
                   </div>
                 </motion.div>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="sm:max-w-3xl">
                 <DialogHeader>
-                  <DialogTitle className="flex items-center gap-3 text-2xl">
-                    <feature.icon className="h-6 w-6 text-primary" />
+                  <DialogTitle className="flex items-center gap-3 text-3xl">
+                    <feature.icon className="h-8 w-8 text-primary" />
                     {feature.title}
                   </DialogTitle>
-                  <DialogDescription className="pt-4 text-base leading-relaxed">
-                    {feature.detail}
-                  </DialogDescription>
                 </DialogHeader>
-                <div className="pt-4">
-                    <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="w-full">
-                        Contact us about this
+                
+                <div className="grid md:grid-cols-2 gap-8 py-6">
+                    <div>
+                        <h4 className="font-bold text-lg mb-2">Service Overview</h4>
+                        <DialogDescription className="text-base leading-relaxed">
+                            {feature.detail}
+                        </DialogDescription>
+                    </div>
+                    
+                    <div className="bg-muted/50 p-6 rounded-xl border border-border">
+                        <h4 className="font-bold text-lg mb-4">Implementation Pipeline</h4>
+                        <div className="space-y-4">
+                            {feature.steps.map((step, i) => (
+                                <div key={i} className="flex gap-4">
+                                    <div className="flex flex-col items-center">
+                                        <div className="h-8 w-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-sm border border-primary/30 shrink-0">
+                                            {i + 1}
+                                        </div>
+                                        {i < feature.steps.length - 1 && (
+                                            <div className="w-0.5 h-full bg-border my-1 min-h-[20px]" />
+                                        )}
+                                    </div>
+                                    <div className="pb-4">
+                                        <h5 className="font-bold text-foreground">{step.title}</h5>
+                                        <p className="text-sm text-muted-foreground">{step.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="pt-2 border-t border-border flex justify-end">
+                    <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="w-full md:w-auto">
+                        Inquire about {feature.title}
                     </Button>
                 </div>
               </DialogContent>
