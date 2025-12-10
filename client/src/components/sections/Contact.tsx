@@ -4,7 +4,14 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
@@ -19,7 +26,7 @@ const formSchema = z.object({
 export function Contact() {
   const { toast } = useToast();
   const { t } = useLanguage();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,14 +37,37 @@ export function Contact() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: t.contact.form.toastTitle,
-      description: t.contact.form.toastDesc,
-    });
-    form.reset();
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!res.ok) {
+        throw new Error("Error al enviar el formulario");
+      }
+
+      toast({
+        title: t.contact.form.toastTitle,
+        description: t.contact.form.toastDesc,
+      });
+
+      form.reset();
+    } catch (error) {
+      console.error("Error al enviar el correo:", error);
+      toast({
+        title: t.contact.form.toastErrorTitle ?? "Error al enviar",
+        description:
+          t.contact.form.toastErrorDesc ??
+          "Ocurrió un problema al enviar tu mensaje. Por favor, inténtalo nuevamente.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <section id="contact" className="py-24 bg-background">
@@ -45,8 +75,12 @@ export function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Info Side */}
           <div>
-            <span className="text-primary font-bold tracking-wide uppercase text-sm mb-2 block">{t.contact.badge}</span>
-            <h2 className="font-display text-4xl font-bold text-foreground mb-6">{t.contact.title}</h2>
+            <span className="text-primary font-bold tracking-wide uppercase text-sm mb-2 block">
+              {t.contact.badge}
+            </span>
+            <h2 className="font-display text-4xl font-bold text-foreground mb-6">
+              {t.contact.title}
+            </h2>
             <p className="text-lg text-muted-foreground mb-10">
               {t.contact.subtitle}
             </p>
@@ -57,8 +91,10 @@ export function Contact() {
                   <Mail className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground">{t.contact.info.email}</h4>
-                  <p className="text-muted-foreground">hello@datalyra.com</p>
+                  <h4 className="font-bold text-foreground">
+                    {t.contact.info.email}
+                  </h4>
+                  <p className="text-muted-foreground">ventas@datalyra.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -66,8 +102,10 @@ export function Contact() {
                   <Phone className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground">{t.contact.info.call}</h4>
-                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                  <h4 className="font-bold text-foreground">
+                    {t.contact.info.call}
+                  </h4>
+                  <p className="text-muted-foreground">+56 9 3084 5111</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -75,8 +113,14 @@ export function Contact() {
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground">{t.contact.info.office}</h4>
-                  <p className="text-muted-foreground">123 Innovation Drive<br />Tech Valley, CA 94000</p>
+                  <h4 className="font-bold text-foreground">
+                    {t.contact.info.office}
+                  </h4>
+                  <p className="text-muted-foreground">
+                    Santiago de Chile
+                    <br />
+                    Chile
+                  </p>
                 </div>
               </div>
             </div>
@@ -85,7 +129,10 @@ export function Contact() {
           {/* Form Side */}
           <div className="bg-card p-8 rounded-2xl border border-border shadow-lg">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
@@ -94,7 +141,11 @@ export function Contact() {
                       <FormItem>
                         <FormLabel>{t.contact.form.name}</FormLabel>
                         <FormControl>
-                          <Input placeholder="John Doe" {...field} className="bg-background border-input focus:border-primary transition-colors" />
+                          <Input
+                            placeholder="John Doe"
+                            {...field}
+                            className="bg-background border-input focus:border-primary transition-colors"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -107,7 +158,11 @@ export function Contact() {
                       <FormItem>
                         <FormLabel>{t.contact.form.email}</FormLabel>
                         <FormControl>
-                          <Input placeholder="john@company.com" {...field} className="bg-background border-input focus:border-primary transition-colors" />
+                          <Input
+                            placeholder="john@company.com"
+                            {...field}
+                            className="bg-background border-input focus:border-primary transition-colors"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -121,7 +176,11 @@ export function Contact() {
                     <FormItem>
                       <FormLabel>{t.contact.form.company}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Acme Inc." {...field} className="bg-background border-input focus:border-primary transition-colors" />
+                        <Input
+                          placeholder="Acme Inc."
+                          {...field}
+                          className="bg-background border-input focus:border-primary transition-colors"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -134,10 +193,10 @@ export function Contact() {
                     <FormItem>
                       <FormLabel>{t.contact.form.message}</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          placeholder="..." 
+                        <Textarea
+                          placeholder="..."
                           className="min-h-[120px] bg-background border-input focus:border-primary transition-colors"
-                          {...field} 
+                          {...field}
                         />
                       </FormControl>
                       <FormMessage />

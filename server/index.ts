@@ -60,6 +60,9 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  app.get("/__api/test-direct", (req: Request, res: Response) => {
+    return res.json({ ok: true, message: "test-direct desde index.ts" });
+  });
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
