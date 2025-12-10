@@ -7,16 +7,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
+  name: z.string().min(2),
+  email: z.string().email(),
   company: z.string().optional(),
-  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+  message: z.string().min(10),
 });
 
 export function Contact() {
   const { toast } = useToast();
+  const { t } = useLanguage();
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,57 +33,57 @@ export function Contact() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     toast({
-      title: "Message Sent",
-      description: "We'll get back to you as soon as possible.",
+      title: t.contact.form.toastTitle,
+      description: t.contact.form.toastDesc,
     });
     form.reset();
   }
 
   return (
-    <section id="contact" className="py-24 bg-slate-50">
+    <section id="contact" className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Info Side */}
           <div>
-            <span className="text-sky-500 font-bold tracking-wide uppercase text-sm mb-2 block">Get in Touch</span>
-            <h2 className="font-display text-4xl font-bold text-slate-900 mb-6">Let's discuss your data strategy</h2>
-            <p className="text-lg text-slate-600 mb-10">
-              Ready to transform your business with better data insights? Our team is ready to help you build the perfect solution.
+            <span className="text-primary font-bold tracking-wide uppercase text-sm mb-2 block">{t.contact.badge}</span>
+            <h2 className="font-display text-4xl font-bold text-foreground mb-6">{t.contact.title}</h2>
+            <p className="text-lg text-muted-foreground mb-10">
+              {t.contact.subtitle}
             </p>
 
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <div className="h-10 w-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-sky-500 shrink-0">
+                <div className="h-10 w-10 rounded-full bg-card border border-border flex items-center justify-center text-primary shrink-0">
                   <Mail className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900">Email Us</h4>
-                  <p className="text-slate-600">hello@datalyra.com</p>
+                  <h4 className="font-bold text-foreground">{t.contact.info.email}</h4>
+                  <p className="text-muted-foreground">hello@datalyra.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="h-10 w-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-sky-500 shrink-0">
+                <div className="h-10 w-10 rounded-full bg-card border border-border flex items-center justify-center text-primary shrink-0">
                   <Phone className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900">Call Us</h4>
-                  <p className="text-slate-600">+1 (555) 123-4567</p>
+                  <h4 className="font-bold text-foreground">{t.contact.info.call}</h4>
+                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="h-10 w-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-sky-500 shrink-0">
+                <div className="h-10 w-10 rounded-full bg-card border border-border flex items-center justify-center text-primary shrink-0">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900">Office</h4>
-                  <p className="text-slate-600">123 Innovation Drive<br />Tech Valley, CA 94000</p>
+                  <h4 className="font-bold text-foreground">{t.contact.info.office}</h4>
+                  <p className="text-muted-foreground">123 Innovation Drive<br />Tech Valley, CA 94000</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Form Side */}
-          <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-lg">
+          <div className="bg-card p-8 rounded-2xl border border-border shadow-lg">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -89,9 +92,9 @@ export function Contact() {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>{t.contact.form.name}</FormLabel>
                         <FormControl>
-                          <Input placeholder="John Doe" {...field} className="bg-slate-50 border-slate-200 focus:border-sky-500 transition-colors" />
+                          <Input placeholder="John Doe" {...field} className="bg-background border-input focus:border-primary transition-colors" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -102,9 +105,9 @@ export function Contact() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>{t.contact.form.email}</FormLabel>
                         <FormControl>
-                          <Input placeholder="john@company.com" {...field} className="bg-slate-50 border-slate-200 focus:border-sky-500 transition-colors" />
+                          <Input placeholder="john@company.com" {...field} className="bg-background border-input focus:border-primary transition-colors" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -116,9 +119,9 @@ export function Contact() {
                   name="company"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Company (Optional)</FormLabel>
+                      <FormLabel>{t.contact.form.company}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Acme Inc." {...field} className="bg-slate-50 border-slate-200 focus:border-sky-500 transition-colors" />
+                        <Input placeholder="Acme Inc." {...field} className="bg-background border-input focus:border-primary transition-colors" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -129,11 +132,11 @@ export function Contact() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Message</FormLabel>
+                      <FormLabel>{t.contact.form.message}</FormLabel>
                       <FormControl>
                         <Textarea 
-                          placeholder="Tell us about your project..." 
-                          className="min-h-[120px] bg-slate-50 border-slate-200 focus:border-sky-500 transition-colors"
+                          placeholder="..." 
+                          className="min-h-[120px] bg-background border-input focus:border-primary transition-colors"
                           {...field} 
                         />
                       </FormControl>
@@ -141,8 +144,8 @@ export function Contact() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white h-12 text-base">
-                  Send Message
+                <Button type="submit" className="w-full h-12 text-base">
+                  {t.contact.form.submit}
                 </Button>
               </form>
             </Form>
