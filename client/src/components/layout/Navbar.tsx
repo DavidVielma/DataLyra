@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useTheme } from "next-themes";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
+  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,9 +29,9 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: t.nav.services, href: "#services" },
-    { name: t.nav.process, href: "#process" },
-    { name: t.nav.about, href: "#about" },
+    { name: t.nav.services, href: "/#services" }, // Anchor on home
+    { name: t.nav.process, href: "/process" },    // New page
+    { name: t.nav.about, href: "/about" },        // New page
   ];
 
   return (
@@ -38,8 +39,8 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border py-3 shadow-sm"
-          : "bg-transparent py-5"
+          ? "bg-background/95 backdrop-blur-md border-b border-border py-3 shadow-md"
+          : "bg-background/40 backdrop-blur-sm py-5 border-b border-transparent"
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
@@ -55,13 +56,14 @@ export function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              {link.name}
-            </a>
+            <Link key={link.name} href={link.href}>
+              <a className={cn(
+                "text-sm font-medium transition-colors hover:text-primary",
+                location === link.href ? "text-primary font-bold" : "text-muted-foreground"
+              )}>
+                {link.name}
+              </a>
+            </Link>
           ))}
           
           <div className="flex items-center gap-2 border-l border-border pl-6 ml-2">
@@ -96,7 +98,13 @@ export function Navbar() {
 
           <Button 
             className="rounded-full px-6"
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => {
+                if (location !== '/') {
+                    window.location.href = '/#contact';
+                } else {
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }
+            }}
           >
             {t.nav.getStarted}
           </Button>
@@ -127,14 +135,14 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border p-4 shadow-lg flex flex-col gap-4 animate-in slide-in-from-top-5">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-base font-medium text-foreground py-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {link.name}
-            </a>
+            <Link key={link.name} href={link.href}>
+                <a
+                className="text-base font-medium text-foreground py-2 block"
+                onClick={() => setIsMobileMenuOpen(false)}
+                >
+                {link.name}
+                </a>
+            </Link>
           ))}
           <div className="flex items-center justify-between py-2 border-t border-border mt-2 pt-4">
              <span className="text-sm font-medium text-muted-foreground">Language</span>

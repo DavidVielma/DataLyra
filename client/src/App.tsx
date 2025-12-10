@@ -6,12 +6,20 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/lib/i18n";
 import Home from "@/pages/Home";
+import Process from "@/pages/Process";
+import About from "@/pages/About";
 import NotFound from "@/pages/not-found";
+import { Navbar } from "@/components/layout/Navbar";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/process">
+        <Navbar />
+        <Process />
+      </Route>
+      <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
   );

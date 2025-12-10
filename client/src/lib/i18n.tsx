@@ -26,13 +26,29 @@ type Translations = {
     title: string;
     subtitle: string;
     items: {
-      integration: { title: string; desc: string };
-      storytelling: { title: string; desc: string };
-      predictive: { title: string; desc: string };
-      pipelines: { title: string; desc: string };
-      governance: { title: string; desc: string };
-      realtime: { title: string; desc: string };
+      integration: { title: string; desc: string; detail: string };
+      storytelling: { title: string; desc: string; detail: string };
+      predictive: { title: string; desc: string; detail: string };
+      pipelines: { title: string; desc: string; detail: string };
+      governance: { title: string; desc: string; detail: string };
+      realtime: { title: string; desc: string; detail: string };
     };
+  };
+  process: {
+    title: string;
+    subtitle: string;
+    steps: {
+      step1: { title: string; desc: string };
+      step2: { title: string; desc: string };
+      step3: { title: string; desc: string };
+    };
+  };
+  about: {
+    title: string;
+    subtitle: string;
+    mission: { title: string; desc: string };
+    vision: { title: string; desc: string };
+    team: { title: string; desc: string };
   };
   showcase: {
     title: string;
@@ -106,13 +122,53 @@ const translations: Record<Language, Translations> = {
       title: "Comprehensive Data Solutions",
       subtitle: "We don't just process data; we craft intelligence systems that empower your entire organization.",
       items: {
-        integration: { title: "Data Integration", desc: "We unify your fragmented data sources into a single, coherent source of truth." },
-        storytelling: { title: "Visual Storytelling", desc: "Transform dry spreadsheets into compelling, interactive dashboards that tell a story." },
-        predictive: { title: "Predictive Analytics", desc: "Go beyond 'what happened' to 'what will happen' with our advanced modeling." },
-        pipelines: { title: "Custom Pipelines", desc: "Tailored ETL processes that respect your unique business logic and needs." },
-        governance: { title: "Data Governance", desc: "Ensure your data is accurate, secure, and compliant with industry standards." },
-        realtime: { title: "Real-time Insights", desc: "Dashboards that update as your business moves, enabling instant decision making." },
+        integration: { 
+          title: "Data Integration", 
+          desc: "We unify your fragmented data sources into a single, coherent source of truth.",
+          detail: "Our integration layer connects to over 150+ data sources including SQL databases, REST APIs, and legacy systems. We handle the complexity of schema mapping and normalization so you don't have to."
+        },
+        storytelling: { 
+          title: "Visual Storytelling", 
+          desc: "Transform dry spreadsheets into compelling, interactive dashboards that tell a story.",
+          detail: "We apply principles of cognitive psychology and information design to create dashboards that guide the user's attention to what matters most, reducing time-to-insight."
+        },
+        predictive: { 
+          title: "Predictive Analytics", 
+          desc: "Go beyond 'what happened' to 'what will happen' with our advanced modeling.",
+          detail: "Leveraging state-of-the-art machine learning models, we help you forecast trends, churn, and revenue with high accuracy, allowing you to be proactive rather than reactive."
+        },
+        pipelines: { 
+          title: "Custom Pipelines", 
+          desc: "Tailored ETL processes that respect your unique business logic and needs.",
+          detail: "We build robust, scalable ETL/ELT pipelines using modern orchestration tools. Our pipelines are monitored 24/7 and include automated data quality checks."
+        },
+        governance: { 
+          title: "Data Governance", 
+          desc: "Ensure your data is accurate, secure, and compliant with industry standards.",
+          detail: "We implement role-based access control, audit logs, and data lineage tracking to ensure you meet GDPR, CCPA, and SOC2 compliance requirements."
+        },
+        realtime: { 
+          title: "Real-time Insights", 
+          desc: "Dashboards that update as your business moves, enabling instant decision making.",
+          detail: "Using streaming technologies like Kafka and WebSockets, we deliver sub-second latency updates to your critical operational dashboards."
+        },
       },
+    },
+    process: {
+      title: "Our Process",
+      subtitle: "A streamlined approach to unlocking your data's potential.",
+      steps: {
+        step1: { title: "We integrate with your systems", desc: "Seamless connection to your existing infrastructure without disruption." },
+        step2: { title: "We understand your challenges", desc: "Deep dive into your business logic and key performance indicators." },
+        step3: { title: "We adapt technology and solve", desc: "Custom implementation of data solutions that drive results." },
+      }
+    },
+    about: {
+      title: "About DataLyra",
+      subtitle: "We are a team of data engineers, designers, and strategists passionate about making data accessible.",
+      mission: { title: "Our Mission", desc: "To democratize data intelligence for startups and growing enterprises." },
+      vision: { title: "Our Vision", desc: "A world where every business decision is backed by clear, accurate, and beautiful data." },
+      team: { title: "The Team", desc: "Founded by industry veterans from top tech companies." },
     },
     showcase: {
       title: "Clarity in Every Pixel",
@@ -184,13 +240,53 @@ const translations: Record<Language, Translations> = {
       title: "Soluciones de Datos Integrales",
       subtitle: "No solo procesamos datos; creamos sistemas de inteligencia que empoderan a toda tu organización.",
       items: {
-        integration: { title: "Integración de Datos", desc: "Unificamos tus fuentes de datos fragmentadas en una única fuente de verdad coherente." },
-        storytelling: { title: "Narrativa Visual", desc: "Transforma hojas de cálculo áridas en dashboards interactivos y atractivos que cuentan una historia." },
-        predictive: { title: "Analítica Predictiva", desc: "Ve más allá de 'qué pasó' a 'qué pasará' con nuestro modelado avanzado." },
-        pipelines: { title: "Pipelines Personalizados", desc: "Procesos ETL a medida que respetan tu lógica de negocio y necesidades únicas." },
-        governance: { title: "Gobierno de Datos", desc: "Asegura que tus datos sean precisos, seguros y cumplan con los estándares de la industria." },
-        realtime: { title: "Insights en Tiempo Real", desc: "Dashboards que se actualizan a medida que tu negocio se mueve, permitiendo decisiones instantáneas." },
+        integration: { 
+          title: "Integración de Datos", 
+          desc: "Unificamos tus fuentes de datos fragmentadas en una única fuente de verdad coherente.",
+          detail: "Nuestra capa de integración se conecta a más de 150 fuentes de datos, incluyendo bases de datos SQL, APIs REST y sistemas heredados. Manejamos la complejidad del mapeo de esquemas y la normalización."
+        },
+        storytelling: { 
+          title: "Narrativa Visual", 
+          desc: "Transforma hojas de cálculo áridas en dashboards interactivos y atractivos que cuentan una historia.",
+          detail: "Aplicamos principios de psicología cognitiva y diseño de información para crear dashboards que guían la atención del usuario a lo que más importa."
+        },
+        predictive: { 
+          title: "Analítica Predictiva", 
+          desc: "Ve más allá de 'qué pasó' a 'qué pasará' con nuestro modelado avanzado.",
+          detail: "Aprovechando modelos de aprendizaje automático de última generación, te ayudamos a pronosticar tendencias, rotación y ventas con alta precisión."
+        },
+        pipelines: { 
+          title: "Pipelines Personalizados", 
+          desc: "Procesos ETL a medida que respetan tu lógica de negocio y necesidades únicas.",
+          detail: "Construimos pipelines ETL/ELT robustos y escalables utilizando herramientas modernas de orquestación. Nuestros pipelines son monitoreados 24/7."
+        },
+        governance: { 
+          title: "Gobierno de Datos", 
+          desc: "Asegura que tus datos sean precisos, seguros y cumplan con los estándares de la industria.",
+          detail: "Implementamos control de acceso basado en roles, registros de auditoría y seguimiento del linaje de datos para garantizar el cumplimiento de GDPR y otros estándares."
+        },
+        realtime: { 
+          title: "Insights en Tiempo Real", 
+          desc: "Dashboards que se actualizan a medida que tu negocio se mueve, permitiendo decisiones instantáneas.",
+          detail: "Usando tecnologías de streaming como Kafka y WebSockets, entregamos actualizaciones de latencia inferior a un segundo a tus dashboards operativos críticos."
+        },
       },
+    },
+    process: {
+      title: "Nuestro Proceso",
+      subtitle: "Un enfoque simplificado para desbloquear el potencial de tus datos.",
+      steps: {
+        step1: { title: "Nos integramos a tus sistemas", desc: "Conexión fluida a tu infraestructura existente sin interrupciones." },
+        step2: { title: "Entendemos tus desafíos", desc: "Profundizamos en tu lógica de negocio e indicadores clave de rendimiento." },
+        step3: { title: "Adaptamos tecnología y solucionamos", desc: "Implementación personalizada de soluciones de datos que impulsan resultados." },
+      }
+    },
+    about: {
+      title: "Sobre DataLyra",
+      subtitle: "Somos un equipo de ingenieros de datos, diseñadores y estrategas apasionados por hacer los datos accesibles.",
+      mission: { title: "Nuestra Misión", desc: "Democratizar la inteligencia de datos para startups y empresas en crecimiento." },
+      vision: { title: "Nuestra Visión", desc: "Un mundo donde cada decisión empresarial esté respaldada por datos claros, precisos y hermosos." },
+      team: { title: "El Equipo", desc: "Fundado por veteranos de la industria de las principales empresas tecnológicas." },
     },
     showcase: {
       title: "Claridad en Cada Píxel",
