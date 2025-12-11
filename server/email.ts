@@ -15,24 +15,24 @@ export async function sendContactEmails({ name, email, message, company }: Conta
 
   try {
     // Send both emails in parallel
-    // TEMPORARY: Both emails go to verified address for testing
-    // Change back to ventas@datalyra.com once you verify that domain in Resend
-    await Promise.all([
-      // Email to Sales/Admin (temporary: goes to your verified email)
-      resend.emails.send({
-        from: "DataLyra <onboarding@resend.dev>",
-        to: "david.vielma.vidal@gmail.com", // TEMPORARY - change to ventas@datalyra.com later
-        subject: `[ADMIN] New Contact Form Submission from ${name}`,
-        html: dataLyraAdminHtml(payload),
-      }),
-      // Email to Client (Auto-reply)
-      resend.emails.send({
-        from: "DataLyra <onboarding@resend.dev>",
-        to: email,
-        subject: "Hablemos de tus necesidades de datos - DataLyra",
-        html: dataLyraClientHtml(payload),
-      }),
-    ]);
+    // Send email to admin only (client email disabled until domain verification)
+    await resend.emails.send({
+      from: "DataLyra <onboarding@resend.dev>",
+      to: "david.vielma.vidal@gmail.com",
+      subject: `[ADMIN] New Contact Form Submission from ${name}`,
+      html: dataLyraAdminHtml(payload),
+    });
+
+    // Client confirmation email disabled temporarily
+    // To enable: verify datalyra.com domain in Resend
+    /*
+    await resend.emails.send({
+      from: "DataLyra <onboarding@resend.dev>",
+      to: email,
+      subject: "Hablemos de tus necesidades de datos - DataLyra",
+      html: dataLyraClientHtml(payload),
+    });
+    */
 
     console.log("✅ Emails sent successfully via Resend");
     return true;

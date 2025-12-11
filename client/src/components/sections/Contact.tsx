@@ -52,8 +52,9 @@ export function Contact() {
       }
 
       toast({
-        title: t.contact.form.toastTitle,
-        description: t.contact.form.toastDesc,
+        title: "✅ ¡Mensaje enviado exitosamente!",
+        description: "Gracias por contactarnos. Hemos recibido tu mensaje y te responderemos a la brevedad.",
+        className: "bg-green-500 text-white border-green-600",
       });
 
       form.reset();
