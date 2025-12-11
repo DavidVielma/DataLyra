@@ -15,17 +15,19 @@ export async function sendContactEmails({ name, email, message, company }: Conta
 
   try {
     // Send both emails in parallel
+    // TEMPORARY: Both emails go to verified address for testing
+    // Change back to ventas@datalyra.com once you verify that domain in Resend
     await Promise.all([
-      // Email to Sales/Admin
+      // Email to Sales/Admin (temporary: goes to your verified email)
       resend.emails.send({
-        from: "DataLyra <onboarding@resend.dev>", // Will be replaced with your domain later
-        to: "ventas@datalyra.com",
-        subject: `New Contact Form Submission from ${name}`,
+        from: "DataLyra <onboarding@resend.dev>",
+        to: "david.vielma.vidal@gmail.com", // TEMPORARY - change to ventas@datalyra.com later
+        subject: `[ADMIN] New Contact Form Submission from ${name}`,
         html: dataLyraAdminHtml(payload),
       }),
       // Email to Client (Auto-reply)
       resend.emails.send({
-        from: "DataLyra <onboarding@resend.dev>", // Will be replaced with your domain later
+        from: "DataLyra <onboarding@resend.dev>",
         to: email,
         subject: "Hablemos de tus necesidades de datos - DataLyra",
         html: dataLyraClientHtml(payload),
