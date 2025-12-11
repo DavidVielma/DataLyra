@@ -11,16 +11,13 @@ interface ContactEmailParams {
 export async function sendContactEmails({ name, email, message, company }: ContactEmailParams) {
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.GMAIL_USER,
       pass: process.env.GMAIL_PASS,
     },
-    // Force IPv4 to avoid IPv6 timeouts in some cloud environments
-    tls: {
-      ciphers: "SSLv3",
-    },
+    family: 4, // Force IPv4
   });
 
   // Verify connection configuration
