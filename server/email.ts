@@ -19,7 +19,7 @@ export async function sendContactEmails({ name, email, message, company }: Conta
     await resend.emails.send({
       from: "DataLyra <onboarding@resend.dev>",
       to: "david.vielma.vidal@gmail.com",
-      subject: `[ADMIN] New Contact Form Submission from ${name}`,
+      subject: `[ADMIN] Nuevo contacto de ${name}`,
       html: dataLyraAdminHtml(payload),
     });
 
