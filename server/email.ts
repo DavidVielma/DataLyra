@@ -12,11 +12,24 @@ export async function sendContactEmails({ name, email, message, company }: Conta
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
-    secure: false, // true for 465, false for other ports (587 uses STARTTLS)
+    secure: false,
     auth: {
       user: process.env.GMAIL_USER,
       pass: process.env.GMAIL_PASS,
     },
+    // Force IPv4 to avoid IPv6 timeouts in some cloud environments
+    tls: {
+      ciphers: "SSLv3",
+    },
+  });
+
+  // Verify connection configuration
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log("❌ Error connecting to email server:", error);
+    } else {
+      console.log("✅ Email server connection is ready");
+    }
   });
 
   const payload = { name, email, message, company };
