@@ -22,10 +22,23 @@ export async function registerRoutes(
   });
 
   // Ruta que usa tu Contact.tsx
-  app.post("/api/send-email", (req: Request, res: Response) => {
-    console.log("✅ /api/send-email fue llamado (SIMPLE)");
-    console.log("Body recibido:", req.body);
-    return res.json({ ok: true });
+  app.post("/api/send-email", async (req: Request, res: Response) => {
+    console.log("✅ /api/send-email fue llamado");
+    const { name, email, message, company } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ ok: false, message: "Missing fields" });
+    }
+
+    try {
+      // Import dynamically to ensure env vars are loaded if dotenv logic is added later or just to keep it clean
+      const { sendContactEmails } = await import("./email");
+      await sendContactEmails({ name, email, message, company });
+      return res.json({ ok: true });
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      return res.status(500).json({ ok: false, message: "Internal Server Error" });
+    }
   });
 
   return httpServer;
